@@ -1,0 +1,11 @@
+# Dependências e artefatos locais
+node_modules/
+_site/
+_preview*.html
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

@@ -1,0 +1,12 @@
+{
+  "name": "fluxo-financas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Controle financeiro pessoal com os dados em uma planilha do Google Drive",
+  "scripts": {
+    "dev": "npx --yes serve . -l 5173",
+    "start": "npx --yes serve . -l 5173",
+    "test": "node scripts/test-sheet.mjs"
+  }
+}
