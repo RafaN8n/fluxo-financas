@@ -317,6 +317,7 @@ export class Store {
       this.txs = data.txs;
       this.negativeExpenses = data.negativeExpenses;
       this.tipoLabels = data.tipoLabels;
+      this.applyTipoVocab();
       this.sheetTitle = data.meta.title;
       this.lastSync = new Date();
       this.emit('change');
@@ -324,6 +325,25 @@ export class Store {
       this.syncing = false;
       this.emit('sync-end');
     }
+  }
+
+  /** Vocabulário escolhido nas configurações: 'auto' | 'receita-despesa' | 'provento-gasto' */
+  get tipoVocab() {
+    const value = localStorage.getItem(CONFIG.storageKeys.tipoVocab) || 'auto';
+    return CONFIG.tipoVocab[value] ? value : 'auto';
+  }
+
+  setTipoVocab(value) {
+    if (!CONFIG.tipoVocab[value]) return;
+    if (value === 'auto') localStorage.removeItem(CONFIG.storageKeys.tipoVocab);
+    else localStorage.setItem(CONFIG.storageKeys.tipoVocab, value);
+    this.applyTipoVocab();
+    this.emit('change');
+  }
+
+  applyTipoVocab() {
+    const forced = CONFIG.tipoVocab[this.tipoVocab];
+    if (forced) this.tipoLabels = { ...forced };
   }
 
   loadDemo() {

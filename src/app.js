@@ -536,6 +536,12 @@ function onAction(action, el) {
       render();
       break;
     }
+    case 'set-tipo-vocab': {
+      store.setTipoVocab(el.dataset.value);
+      ui.toast(`Novos lançamentos usarão “${store.tipoLabels.despesa}” e “${store.tipoLabels.receita}”.`, 'info');
+      render();
+      break;
+    }
     case 'copy-origin': {
       navigator.clipboard?.writeText(el.dataset.value || window.location.origin)
         .then(() => ui.toast('Origem copiada.'))

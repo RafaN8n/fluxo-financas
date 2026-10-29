@@ -81,6 +81,37 @@ export function renderSettings(store, state) {
     </section>
 
     <section class="card">
+      <div class="card-head"><div><h2>Planilha</h2><p>Como o app lê e grava os lançamentos</p></div></div>
+      <div class="card-body">
+        <div class="setting-row" style="padding-top:0">
+          <div class="s-text">
+            <h3>Vocabulário do campo “Tipo”</h3>
+            <p>Rótulos gravados nas novas linhas. Hoje: <strong>${escapeHtml(store.tipoLabels.despesa)}</strong> / <strong>${escapeHtml(store.tipoLabels.receita)}</strong>.</p>
+          </div>
+          <div class="s-action">
+            <div class="segmented" role="group" aria-label="Vocabulário do campo Tipo">
+              ${[
+                ['auto', 'Automático'],
+                ['receita-despesa', 'Receita/Despesa'],
+                ['provento-gasto', 'Provento/Gasto'],
+              ]
+                .map(([value, label]) => `<button type="button" data-action="set-tipo-vocab" data-value="${value}" class="${store.tipoVocab === value ? 'active' : ''}">${label}</button>`)
+                .join('')}
+            </div>
+          </div>
+        </div>
+        ${
+          store.negativeExpenses
+            ? `<div class="setting-row">
+                <div class="s-text"><h3>Despesas em negativo</h3><p>Detectamos que sua planilha grava despesas com sinal negativo. O app mantém essa convenção.</p></div>
+                <div class="s-action"><span class="pill">Ativo</span></div>
+              </div>`
+            : ''
+        }
+      </div>
+    </section>
+
+    <section class="card">
       <div class="card-head"><div><h2>Aparência</h2><p>Tema do painel</p></div></div>
       <div class="card-body">
         <div class="setting-row" style="border-bottom:0;padding-top:0">

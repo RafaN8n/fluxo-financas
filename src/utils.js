@@ -149,8 +149,8 @@ export function parseAmount(value) {
 export function parseTipo(value) {
   const s = norm(value);
   if (!s) return null;
-  if (/(receita|entrada|credit|credito|ganho|income|recebimento|deposito)/.test(s)) return 'receita';
-  if (/(despesa|saida|debit|debito|gasto|expense|pagamento|retirada|compra)/.test(s)) return 'despesa';
+  if (/(receita|entrada|credit|credito|ganho|income|recebimento|deposito|provento|renda)/.test(s)) return 'receita';
+  if (/(despesa|saida|debit|debito|gasto|expense|pagamento|retirada|compra|consumo)/.test(s)) return 'despesa';
   return null;
 }
 

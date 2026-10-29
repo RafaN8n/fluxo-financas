@@ -59,8 +59,8 @@ Na primeira conexão você pode:
 ## 3. Publicar no GitHub Pages
 
 1. Crie um repositório e envie este projeto para a branch `main`.
-2. Em **Settings → Pages**, escolha **Source: GitHub Actions**.
-3. O workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) publica a cada push.
+2. Em **Settings → Pages**, escolha **Source: Deploy from a branch**, branch `main`, pasta `/ (root)`.
+3. Cada push na `main` publica automaticamente (o arquivo `.nojekyll` evita o processamento do Jekyll).
 4. Acesse `https://SEU-USUARIO.github.io/NOME-DO-REPO/` e adicione essa origem no Google Cloud (passo 1.4).
 
 O endereço exato da origem aparece na própria tela inicial, com botão de copiar.
@@ -78,12 +78,35 @@ O que o app aceita na leitura:
 
 - **Data**: data nativa do Sheets, `dd/mm/aaaa` ou `aaaa-mm-dd`.
 - **Valor**: número, texto com `R$`, vírgula decimal ou negativo.
-- **Tipo**: `Receita`/`Despesa`, `Entrada`/`Saída`, `Crédito`/`Débito` (sem diferenciar maiúsculas ou acentos).
+- **Tipo**: `Receita`/`Despesa`, `Entrada`/`Saída`, `Provento`/`Gasto`, `Crédito`/`Débito` (sem diferenciar maiúsculas ou acentos).
 - **Colunas ausentes**: se `Tipo` não existir, o app infere pelo sinal do valor e pela categoria.
 - **Convenção de sinal**: se a planilha usa despesas negativas, o app mantém essa convenção ao gravar.
-- **Rótulos de tipo**: o app reutiliza os rótulos que já existem na sua planilha (`Saída`, `Despesa`, etc.).
+- **Rótulos de tipo**: o app reutiliza os rótulos que já existem na sua planilha (`gasto`, `provento`, `Saída`, `Despesa`, …).
 
 Os nomes das colunas também podem ser variações como `Histórico`, `Grupo`, `Sub-categoria`, `Natureza`, `Montante`, `Obs`.
+
+### Vocabulário do campo Tipo
+
+Em **Ajustes → Planilha** você escolhe o que o app grava em novas linhas:
+
+| Opção | Despesa | Receita |
+|-------|---------|---------|
+| Automático (padrão) | reaproveita o rótulo mais usado na planilha | idem |
+| Receita/Despesa | `Despesa` | `Receita` |
+| Provento/Gasto | `Gasto` | `Provento` |
+
+O modo **Automático** funciona bem para planilhas que já têm dados. Para planilhas novas ou vazias, escolha explicitamente o par que você usa.
+
+### Compatível com Apps Script
+
+Se você tem um script na planilha (por exemplo, uma API própria), o app não interfere nele:
+
+- não cria colunas novas — grava apenas nas sete existentes;
+- grava `valor` sempre positivo (o sinal negativo só é usado se a sua planilha já trabalhar assim);
+- grava a data como `aaaa-mm-dd` (o Sheets converte para data nativa, e o `Utilities.formatDate` do Apps Script lê normalmente);
+- grava o tipo com o vocabulário que você escolher — `gasto`/`provento` inclusive.
+
+O app fala direto com a API do Google Sheets; o seu Apps Script continua sendo uma via independente de acesso aos mesmos dados.
 
 ### Várias abas
 

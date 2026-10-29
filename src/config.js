@@ -14,6 +14,14 @@ export const CONFIG = {
     user: 'fluxo.user',
     theme: 'fluxo.theme',
     demo: 'fluxo.demo',
+    tipoVocab: 'fluxo.tipoVocab',
+  },
+  // Vocabulário gravado na coluna "Tipo". "auto" reaproveita os rótulos que já
+  // existem na planilha; as demais opções forçam um par fixo.
+  tipoVocab: {
+    auto: null,
+    'receita-despesa': { receita: 'Receita', despesa: 'Despesa' },
+    'provento-gasto': { receita: 'Provento', despesa: 'Gasto' },
   },
   // Categorias sugeridas (apenas autocomplete — nada é gravado na planilha)
   suggestions: {
